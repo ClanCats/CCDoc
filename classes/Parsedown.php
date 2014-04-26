@@ -1,5 +1,4 @@
 <?php
-
 #
 #
 # Parsedown
@@ -12,7 +11,6 @@
 # with this source code.
 #
 #
-
 class Parsedown
 {
 	# Multiton
