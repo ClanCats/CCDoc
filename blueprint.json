@@ -1,5 +1,5 @@
 {
-	"name": "Doc",
+	"name": "CCDoc",
 	"version": "1.0.0",
 	"description": "ClanCats documentation module",
 	"homepage": "http://www.clancats.ch",
@@ -12,5 +12,5 @@
 			"email": "info@clancats.com"
 		}
 	],
-	"namespace": "Doc"
+	"namespace": "CCDoc"
 }

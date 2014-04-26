@@ -17,7 +17,7 @@ return array(
 		'default_prefix'			=> 'docs',
 		
 		// And with wich controller should they get renderd
-		'default_controller'		=> 'Doc::Doc'
+		'default_controller'		=> 'CCDoc::Doc'
 	),
 	
 );

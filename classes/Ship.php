@@ -1,4 +1,4 @@
-<?php namespace Doc;
+<?php namespace CCDoc;
 /**
  * Doc ship
  **
@@ -24,7 +24,7 @@ class Ship extends \CCOrbit_Ship
 		));
 		
 		// make a shadow
-		\CCFinder::shadow( 'Doc', 'Doc' );
+		\CCFinder::shadow( 'CCDoc', 'CCDoc' );
 	}
 	
 	/**

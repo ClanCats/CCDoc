@@ -1,4 +1,4 @@
-<?php namespace Doc;
+<?php namespace CCDoc;
 /**
  * Doc
  * Documentation handler generates nice documentations out of markdown files
@@ -9,7 +9,7 @@
  * @version       1.0.0
  * @copyright     2010 - 2014 ClanCats GmbH
  */
-class Doc
+class CCDoc
 {
 	/**
 	 * The documentation configuration
@@ -25,7 +25,7 @@ class Doc
 	 */
 	public static function _init()
 	{
-		static::$config = \CCConfig::create( 'Doc::docs' );
+		static::$config = \CCConfig::create( 'CCDoc::docs' );
 	}
 	
 	/**

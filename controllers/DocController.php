@@ -1,4 +1,4 @@
-<?php namespace Doc;
+<?php namespace CCDoc;
 /**
  * Documentaion Controller
  ** 
@@ -49,7 +49,7 @@ class DocController extends \CCViewController
 		
 		$this->theme->topic = \CCArr::get( 'topic', $conf, $file_name );
 		
-		$this->theme->sidebar = \CCView::create( 'Doc::sidebar' );
+		$this->theme->sidebar = \CCView::create( 'CCDoc::sidebar' );
 		
 		echo \Parsedown::instance()->parse( "<h1 style='padding-top: 0;'>".$this->theme->topic."</h1>".$md );	
 	}
