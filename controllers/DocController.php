@@ -47,6 +47,12 @@ class DocController extends \CCViewController
 		$file_name = \CCStr::replace( \CCStr::cut( $file_name, '.md' ), array( '_' => ' ' ) );
 		
 		
+		// is there a redirect command?
+		if ( isset( $conf['redirect'] ) )
+		{
+			return \CCRedirect::to( $conf['redirect'] );
+		}
+		
 		$this->theme->topic = \CCArr::get( 'topic', $conf, $file_name );
 		
 		$this->theme->sidebar = \CCView::create( 'CCDoc::sidebar' );
