@@ -57,6 +57,34 @@ class DocController extends \CCViewController
 		
 		$this->theme->sidebar = \CCView::create( 'CCDoc::sidebar' );
 		
-		echo \Parsedown::instance()->parse( "<h1 style='padding-top: 0;'>".$this->theme->topic."</h1>".$md );	
+		// generate the html
+		$html = \Parsedown::instance()->parse( $md );
+		
+		// identifiy headers 
+		preg_match_all("~<(h2|h3)*([^>]+)>(.+?)</(h2|h3)>~i", $html, $matches );
+		
+		$headers = array();
+		
+		foreach( $matches[0] as $key => $heading ) 
+		{	
+			$id = \CCStr::clean_url( $matches[3][$key], '-' ).'-'.($key+1);
+			
+			$headers[$id] = $matches[3][$key];
+			
+			$html = str_replace( 
+				$heading,
+				'<'.$matches[4][$key].' id="'.$id.'">'.$matches[3][$key].'</'.$matches[4][$key].'>',
+				$html 
+			);
+		}
+		
+		$header_navigation = "";
+		
+		foreach( $headers as $id => $header )
+		{
+			$header_navigation .= "<li><a href='#".$id."'>".$header."</a></li>";
+		}
+		
+		echo "<h1 style='padding-top: 0;'>".$this->theme->topic."</h1>"."<ul>".$header_navigation."</ul>".$html;
 	}
 }
