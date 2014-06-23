@@ -17,7 +17,7 @@ class CCDoc
 	 * @var CCConfig
 	 */
 	public static $config = null;
-	
+
 	/**
 	 * static class initialisation
 	 *
@@ -27,7 +27,7 @@ class CCDoc
 	{
 		static::$config = \CCConfig::create( 'CCDoc::docs' );
 	}
-	
+
 	/**
 	 * Creates an documentation instance
 	 *
@@ -38,14 +38,14 @@ class CCDoc
 	{
 		return new static( $namespace );
 	}
-	
+
 	/**
 	 * The document tree holder
 	 *
 	 * @param array
 	 */
 	protected $_tree = array();
-	
+
 	/**
 	 * Doc Constructor
 	 *
@@ -61,9 +61,9 @@ class CCDoc
 		{
 			$dir = \CCPath::get( $namespace.'::', CCDIR_DOC );
 		}
-		
+
 		$this->_tree = array();
-		
+
 		$directory_iterator = new \RecursiveIteratorIterator( new \RecursiveDirectoryIterator($dir) );
 		foreach( $directory_iterator as $filename => $path_object )
 		{
@@ -73,10 +73,10 @@ class CCDoc
 				\CCArr::set( $key, $filename, $this->_tree );
 			}
 		}
-		
+
 		ksort($this->_tree);
 	}
-	
+
 	/**
 	 * registers the documentation routes
 	 * 
@@ -89,18 +89,18 @@ class CCDoc
 		{
 			$prefix = static::$config->get( 'router.default_prefix' );
 		}
-		
+
 		if ( is_null( $controller ) )
 		{
 			$controller = static::$config->get( 'router.default_controller' );
 		}
-		
+
 		\CCRouter::on( $this->_tree_to_routes( $this->_tree, $prefix, $controller ) );
-		
+
 		// we share the navigation with all views
 		\CCView::share( 'doc_navigation', $this->navigation( $this->_tree, $prefix ) );
 	}
-	
+
 	/**
 	 * This wil generate a html navigation tree based on routes
 	 *
@@ -111,14 +111,16 @@ class CCDoc
 	{
 		$buffer = "";
 		$prefix .= '/';
-		
+
+		ksort( $tree );
+
 		foreach( $tree as $key => $file )
 		{	
 			if ( strpos( $key, '_' ) !== false )
 			{
 				$key = substr( $key, strpos( $key, '_' )+1 );
 			}
-			
+
 			// when the key start with an _ we use it as title in the 
 			// navigation sidebar
 			if ( substr( $key, 0, 1 ) == '_' )
@@ -126,10 +128,10 @@ class CCDoc
 				$buffer .= \UI\HTML::tag( 'li', trim( \CCStr::replace( $key, array( '_' =>' ' ) ) ) )
 					->add_class( 'sidebar-title' ); continue;
 			}
-			
+
 			$name = \CCStr::replace( $key, array( '_' =>' ' ) );
 			$key = \CCStr::lower( $key );
-			
+
 			if ( is_array( $file ) )
 			{
 				if ( array_key_exists( 'index', $file ) )
@@ -163,10 +165,10 @@ class CCDoc
 				}
 			}
 		}
-		
+
 		return \UI\HTML::create( 'ul', $buffer )->add_class( 'nav' );
 	}
-	
+
 	/**
 	 * this method formats the documentation tree
 	 * to a routes array.
@@ -176,18 +178,18 @@ class CCDoc
 	private function _tree_to_routes( $tree, $prefix, $controller )
 	{
 		$routes = array();
-		
+
 		$prefix .= '/';
-		
+
 		foreach( $tree as $key => $file )
 		{	
 			if ( strpos( $key, '_' ) !== false )
 			{
 				$key = substr( $key, strpos( $key, '_' )+1 );
 			}
-			
+
 			$key = \CCStr::lower( $key );
-			
+
 			if ( is_array( $file ) )
 			{
 				$routes = array_merge( $routes, $this->_tree_to_routes( $file, $prefix.$key, $controller ) );
@@ -204,7 +206,7 @@ class CCDoc
 				}
 			}
 		}
-		
+
 		return $routes;
 	}
 }
