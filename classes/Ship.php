@@ -25,6 +25,7 @@ class Ship extends \CCOrbit_Ship
 		
 		// make a shadow
 		\CCFinder::shadow( 'CCDoc', 'CCDoc' );
+		\CCFinder::shadow( 'Parser', 'CCDoc' );
 	}
 	
 	/**

@@ -85,6 +85,14 @@ class DocController extends \CCViewController
 			$header_navigation .= "<li><a href='#".$id."'>".$header."</a></li>";
 		}
 		
+		// Run the evals
+		preg_match_all( "/{{(.*?)}}/", $html, $matches );
+		
+		foreach( $matches[0] as $key => $replace_string )
+		{
+			$html = str_replace( $replace_string, eval( 'return '.$matches[1][$key].';' ), $html );
+		}
+		
 		echo "<h1 style='padding-top: 0;'>".$this->theme->topic."</h1>"."<ul class='content-navigation'>".$header_navigation."</ul>".$html;
 	}
 }
