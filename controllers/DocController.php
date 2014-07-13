@@ -86,7 +86,7 @@ class DocController extends \CCViewController
 		}
 		
 		// Run the evals
-		preg_match_all( "/{{(.*?)}}/", $html, $matches );
+		preg_match_all( "/\{\[(.*?)\]\}/", $html, $matches );
 		
 		foreach( $matches[0] as $key => $replace_string )
 		{
